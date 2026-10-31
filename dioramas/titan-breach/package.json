@@ -1,0 +1,12 @@
+{
+  "name": "titan-breach",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node build.mjs --minify"
+  },
+  "dependencies": {
+    "three": "^0.183.0",
+    "esbuild": "^0.25.0"
+  }
+}

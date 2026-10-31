@@ -1,0 +1,13 @@
+node_modules/
+.astro/
+dist/
+public/scenes/
+public/licenses/
+artifacts/
+dioramas/*/*.html
+*.log
+.env
+.env.*
+!.env.example
+.DS_Store
+Thumbs.db

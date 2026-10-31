@@ -1,0 +1,31 @@
+{
+  "name": "dioramas",
+  "private": true,
+  "type": "module",
+  "workspaces": [
+    "dioramas/*"
+  ],
+  "scripts": {
+    "scenes": "node scripts/build-scenes.mjs",
+    "dev": "npm run scenes && astro dev --host 127.0.0.1",
+    "build": "npm run scenes && astro build",
+    "preview": "astro preview --host 127.0.0.1",
+    "test": "npm run build && node tests/gallery.mjs",
+    "test:browser:install": "node node_modules/playwright-core/cli.js install chromium",
+    "format": "prettier --write .",
+    "format:check": "prettier --check ."
+  },
+  "dependencies": {
+    "astro": "7.4.4",
+    "three": "0.187.0"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.64.1",
+    "prettier": "3.6.2",
+    "esbuild": "0.28.2"
+  },
+  "engines": {
+    "node": ">=22.23.4"
+  },
+  "description": "A fun experiment with pixel-style Three.js scenes, tiny worlds, and playful animation."
+}

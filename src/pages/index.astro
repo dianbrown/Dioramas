@@ -1,0 +1,52 @@
+---
+import scenes from '../data/scenes.json';
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <meta name="description" content="A collection of tiny animated worlds. Dioramas on white paper." />
+    <link rel="icon" href="data:," />
+    <title>{scenes[0].title} · Dioramas</title>
+  </head>
+  <body>
+    <main data-scenes={JSON.stringify(scenes)} data-base={base}>
+      <iframe id="scene" src={`${base}scenes/${scenes[0].id}/index.html`} title={scenes[0].title}></iframe>
+      <nav aria-label="Diorama navigation">
+        <button id="previous" aria-label="Previous diorama" aria-disabled={scenes.length < 2 ? 'true' : 'false'}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5m7-7-7 7 7 7" /></svg>
+        </button>
+        <button id="next" aria-label="Next diorama" aria-disabled={scenes.length < 2 ? 'true' : 'false'}>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
+        </button>
+      </nav>
+      <p id="announcement" class="sr-only" aria-live="polite" aria-atomic="true">{scenes[0].title}, 1 of {scenes.length}</p>
+    </main>
+    <script>
+      import { initGallery } from '../scripts/gallery.js';
+      initGallery();
+    </script>
+  </body>
+</html>
+<style is:global>
+  :root { color-scheme: light; font-family: system-ui, sans-serif; background: #fff; }
+  * { box-sizing: border-box; }
+  html, body, main { margin: 0; width: 100%; height: 100%; overflow: hidden; }
+  #scene { position: fixed; inset: 0; width: 100%; height: 100%; border: 0; background: white; }
+  nav button { position: fixed; z-index: 2; top: 50%; transform: translateY(-50%); width: 52px; height: 52px; display: grid; place-items: center; padding: 14px; border: 0; border-radius: 50%; background: rgba(255,255,255,.92); color: #000; cursor: pointer; transition: background .18s, box-shadow .18s; -webkit-tap-highlight-color: transparent; }
+  #previous { left: max(24px, env(safe-area-inset-left)); }
+  #next { right: max(24px, env(safe-area-inset-right)); }
+  nav button:hover { background: #f2f2f2; }
+  nav button:focus-visible { outline: 2px solid #000; outline-offset: 4px; }
+  nav button[aria-disabled="true"] { cursor: default; }
+  nav button svg { width: 24px; height: 24px; fill: none; stroke: currentColor; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; border: 0; }
+  @media (max-width: 600px) {
+    nav button { width: 44px; height: 44px; padding: 10px; top: auto; bottom: max(24px, env(safe-area-inset-bottom)); transform: none; }
+    #previous { left: max(20px, env(safe-area-inset-left)); }
+    #next { right: max(20px, env(safe-area-inset-right)); }
+  }
+  @media (prefers-reduced-motion: reduce) { nav button { transition: none; } }
+</style>
